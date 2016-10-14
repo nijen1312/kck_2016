@@ -1,0 +1,24 @@
+git init - inicializuje repo
+git status - status repozytorium
+git add - doadje katalog do śledzenia
+git commit -m "" - publikuję
+git push - wysłanie do serwera zdalnego 
+git log - podgląd zmian w repo
+git log --stat - podglądanie zmian (bardziej szczegółowe)
+git shortlog - jak log tylko krócej
+
+git clone + lokalizacja (https://) - ściągam zmiany i z zapisuje je lokajnie
+
+
+git branch nazwa - nowy wskaźnik na aktualne miejsce
+git sam się nie przełączy
+git checkout nazwa - wskaźnik head przeskakuje z mastera na branch nazwa
+git checkout master - przełączam na mastera
+
+
+git merge nazwa 
+git pull - spróbuje zmergować zmiany na serwerze 
+git fetch - niemerguje zmian
+
+
+
