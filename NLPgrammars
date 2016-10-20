@@ -1,0 +1,20 @@
+#!/usr/bin/python3
+import sys
+
+def zaladuj():
+	file = open('key_words','r')
+	zatankuj = file.readline().rstrip().split(',')
+	magazyn = file.readline().rstrip().split(',')
+	odbierz = file.readline().rstrip().split(',')
+	zawiez = file.readline().rstrip().split(',')
+	odpocznij = file.readline().rstrip().split(',')
+	pomorz = file.readline().rstrip().split(',')
+	file.close()
+
+#laduje z hasla pliku
+zaladuj()
+
+while True:
+	line = sys.stdin.readline().split()
+	print(line)
+	
