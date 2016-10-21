@@ -2,6 +2,13 @@
 nonASCIIsmall="ąęćśżźłóń"
 nonASCIIcapital="ĄĘĆŚŻŹŁÓŃ"
 asciiChars="aecszzlon"
+
+#czyta linia po lini z stdin
+#zamienia znaki diakrytyczne na zwykłe litery (tr)
+#zamienia wszystkie litery na małe (downcase)
+#usuwa wszystkie znaki poza literami, cyframi i spacjami (gsub)
+#drukuje wynik na stdio
+
 while true
 	print $stdin.readline.tr(nonASCIIsmall+nonASCIIcapital, asciiChars*2).downcase.gsub(/[^a-z0-9\s]/i, '')
 end
