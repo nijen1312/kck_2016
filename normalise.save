@@ -1,7 +1,0 @@
-/usr/bin/ruby
-nonASCIIsmall="ąęćśżźłóń"
-nonASCIIcapital="ĄĘĆŚŻŹŁÓŃ"
-asciiChars="aecszzlon"
-while true
-	print $stdin.readline.tr(nonASCIIsmall+nonASCIIcapital, asciiChars*2).downcase.gsub(/[^a-z0-9\s]/i, '')
-end
