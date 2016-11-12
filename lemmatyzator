@@ -1,0 +1,25 @@
+#!/usr/bin/python3
+
+import sys, re
+delimeters = [';',',','/']
+dicFile = open('dictionary','r')
+dic = dicFile.read()
+
+while True:
+    line = sys.stdin.readline().strip().split()
+    out = []
+    for word in line:
+        pattern = r"^" + word + r";"
+        print("wzor to: "+pattern)
+        dicLine= re.findall(pattern,dic)
+        print ()
+#         dicData = []
+        # for deli in delimeters:
+            # dicData.append(dicLine[:dicLine.index(delim)])
+            # dicLine = dicLine[dicLine.index(delim)+1:]
+        # core = word[:len(word) - dicData[1][0]]
+        # out.append(core + dicData[1][1:])
+    # print(" ".join(out))
+        
+
+
