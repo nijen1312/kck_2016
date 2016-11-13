@@ -11,4 +11,4 @@ while True:
         line = sys.stdin.readline().strip().lower()
         line = re.sub(r"\W"," ",line)
         print(line)
-        sys.stdin.flush()
+        sys.stdout.flush()
