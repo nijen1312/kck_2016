@@ -3,27 +3,20 @@
 import sys, re
 delimeters = [';',',','/']
 dicFile = open('dictionary','r')
-#dic = dicFile.readlines()
-dic = dicFile.read()
-
+dictionary = {}
+for line in dicFile:
+    word,data = line.split(delimeters[0])
+    dictionary[word]=data
 while True:
     line = sys.stdin.readline().strip().split()
     out = []
     for word in line:
-        pattern = r"\b" + word + r";.*"
-        dicLine = [] 
-#         for dicRecord in dic:
-            # dicLine = re.findall(pattern,dicRecord)
-            # if dicLine != []:
-                # break
-        dicLine=re.findall(pattern,dic)
-        dicLine = dicLine[0]
-        dicData = []
-        for delim in delimeters:
-            dicData.append(dicLine[:dicLine.index(delim)])
-            dicLine = dicLine[dicLine.index(delim)+1:]
-        core = word[:len(word) - int(dicData[1][0])]
-        out.append(core + dicData[1][1:])
+        dicLine = dictionary[word]
+        charsToCut  = re.findall(r"[0-9]*",dicLine)[0]
+        core = word[:len(word) - int(charsToCut)]
+        charsToAdd = re.findall(r"[^0-9][^,]*",dicLine)[0]
+        out.append(core + charsToAdd)
+
     print(" ".join(out))
         
 
