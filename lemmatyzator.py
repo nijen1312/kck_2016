@@ -5,7 +5,7 @@
 
 import sys, re
 lineDelimeters = [';',',','/']
-dicFile = open('dictionary','r')
+dicFile = open('dictionary.txt','r')
 dictionary = {}
 
 #poniższa pętla for wczytuje linie z pliku z odmianami słów do hash'a pythonowego
