@@ -22,23 +22,31 @@ def action(comp):
         return "pomoz"
 
 #laduje z hasla pliku
+dict = {}
 file = open('key_words','r')
-zatankuj = file.readline().rstrip().split(',')
-magazyn = file.readline().rstrip().split(',')
-odbierz = file.readline().rstrip().split(',')
-zawiez = file.readline().rstrip().split(',')
-odpocznij = file.readline().rstrip().split(',')
-pomoz = file.readline().rstrip().split(',')
+content = file.readlines()
+for line in content:
+    if line[0] not in dict:
+        dict[line[0]] = line[1:]
+    # else:
+    #     dict[line[0]].append(line[1:])
+# zatankuj = file.readline().rstrip().split(',')
+# magazyn = file.readline().rstrip().split(',')
+# odbierz = file.readline().rstrip().split(',')
+# zawiez = file.readline().rstrip().split(',')
+# odpocznij = file.readline().rstrip().split(',')
+# pomoz = file.readline().rstrip().split(',')
+print(dict)
 file.close()
 
-while True:
-    line = input().split()
-    #lista powtórzeń
-    comp = []
-    comp.append(compare(zatankuj,line))
-    comp.append(compare(magazyn,line))
-    comp.append(compare(odbierz,line))
-    comp.append(compare(zawiez,line))
-    comp.append(compare(odpocznij,line))
-    comp.append(compare(pomoz,line))
-    print(action(comp))
+# while True:
+#     line = input().split()
+#     #lista powtórzeń
+#     comp = []
+#     comp.append(compare(zatankuj,line))
+#     comp.append(compare(magazyn,line))
+#     comp.append(compare(odbierz,line))
+#     comp.append(compare(zawiez,line))
+#     comp.append(compare(odpocznij,line))
+#     comp.append(compare(pomoz,line))
+#     print(action(comp))
