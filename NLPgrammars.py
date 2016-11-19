@@ -1,15 +1,10 @@
 #!/usr/bin/python3
 import sys
-import operator
 
 #część wspólna dwóch list
 def compare(list1,list2):
     c = set(list1) & set(list2)
     return len(c)
-
-def action(comp):
-    a = comp.index(max(comp))
-    return a
 
 #laduje z hasla pliku
 dict = {}
@@ -29,5 +24,4 @@ while True:
     comp = {}
     for key in dict:
         comp[key] = (compare(dict[key],line))
-    print(comp)
     print(max(comp, key=comp.get))
