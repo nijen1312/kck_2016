@@ -13,9 +13,9 @@ content = file.readlines()
 for line in content:
     line = line.rstrip().split(',')
     if line[0] not in dict:
-        dict[line[0]] = line[2:]
+        dict[line[0]] = line[1:]
     else:
-        dict[line[0]].extend(line[2:])
+        dict[line[0]].extend(line[1:])
 print(dict)
 file.close()
 
