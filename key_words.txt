@@ -1,6 +1,6 @@
-ZATANKUJ,zatankuj,nalej,wlej,napełnij
-MAGAZYN,zjedź,magazyn,zrzuć,zawieź,baza
-ODBIERZ,odbierz,paczka,zabierz,zgarnij
-ZAWIEŹ,zawieź,paczka,dostarcz,podskocz,podrzuć,umowa,papiery,dokumnety
-PRZERWA,zrob,przerwa,skocz,odpocznij
-POMOC,pomoz
+ZATANKUJ,zatankować,nalać,wlać,napełnić,benzyna
+MAGAZYN,zjechać,magazyn,zrzucić,zawieźć,baza
+ODBIERZ,odebrać,paczka,zabrać,zgarnąć
+ZAWIEŹ,zawieźć,paczka,dostarczyć,podskoczyć,podrzucić,umowa,papiery,dokumnety
+PRZERWA,zrobić,przerwa,skoczyć,odpocząć
+POMOC,pomóc
