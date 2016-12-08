@@ -1,6 +1,6 @@
 ZATANKUJ,zatankować,nalać,wlać,napełnić,benzyna
 MAGAZYN,zjechać,magazyn,zrzucić,zawieźć,baza
 ODBIERZ,odebrać,paczka,zabrać,zgarnąć
-ZAWIEŹ,zawieźć,paczka,dostarczyć,podskoczyć,podrzucić,umowa,papiery,dokumnety
+ZAWIEŹ,zawieźć,paczka,dostarczyć,podskoczyć,podrzucić,umowa,papiery,dokumenty
 PRZERWA,zrobić,przerwa,skoczyć,odpocząć
-POMOC,pomóc
+JEDŹ,jechać
