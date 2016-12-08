@@ -28,7 +28,7 @@ while True:
             if token2 in dict[key]:
                 token = token + ':' + key
                 break
-        if token.split(':')[1] == 'adv':
+        if token.split(':')[1] == 'adv' or token.split(':')[1] == 'qub':
                 list_polecen.append(temporary_list)
                 temporary_list = []
                 temporary_list.append(token)

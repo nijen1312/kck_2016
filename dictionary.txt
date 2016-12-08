@@ -25327,3 +25327,4 @@ Zygfrydom	Zygfryda	subst:pl:dat:f	imię
 żydomasonerii	żydomasoneria	subst:sg:dat:f	pospolita
 Żyndom	Żynda	subst:pl:dat:m1	
 żyrondom	żyronda	subst:pl:dat:f	pospolita
+i	i	qub	pospolita
