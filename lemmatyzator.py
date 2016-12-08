@@ -9,21 +9,17 @@ dicFile = open('dictionary.txt','r')
 dictionary = {}
 
 #poniższa pętla for wczytuje linie z pliku z odmianami słów do hash'a pythonowego
-#kluczem w hash'u jest odmienione słowo a wartością dla klucza informacje o odmianie
-#oraz co zrobic żeby zamienić dane słowo na formę podstawową
+#kluczem w hash'u jest odmienione słowo a wartością dla klucza hash z informacjami o odmianie
 
 for line in dicFile:
-    word,data = line.split(lineDelimeters[0])
-    dictionary[word]=data
+    word, lemma, info, wordType = line.split(lineDelimeters[0])
+    dictionary[word]={'LEMMA':lemma,'INFO':info,'TYPE':wordType}
 #pętla while oczekuje cały czas na wejście
 while True:
     line = sys.stdin.readline().strip().split()
     out = []
     #pętla for przetwarza każde słowo w wejściowej lini na formę podstawową
     for word in line:
-        dicLine = dictionary[word]
-        lemma, wordInfo = dicLine.split(lineDelimeters[0])
-        wordType = wordInfo.split(':')[0]
-        out.append(lemma + ':' + wordType + ':')
+        out.append(dictionary[word]['LEMMA'] + ':' + dictionary[word]['INFO'].split(':')[0])
     print(" ".join(out))
     sys.stdout.flush()
