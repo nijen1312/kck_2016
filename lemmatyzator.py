@@ -4,7 +4,7 @@
 #np. "jedź do bazy" zamienia na "jechać do baza"
 
 import sys, re
-lineDelimeters = [';',',','/']
+lineDelimeters = ['\t',]
 dicFile = open('dictionary.txt','r')
 dictionary = {}
 
@@ -22,11 +22,8 @@ while True:
     #pętla for przetwarza każde słowo w wejściowej lini na formę podstawową
     for word in line:
         dicLine = dictionary[word]
-        #ile uciąc z odmienionej formy
-        charsToCut  = re.findall(r"[0-9]+",dicLine)[0]
-        core = word[:len(word) - int(charsToCut)]
-        #co dodać żeby uzyskać formę podstawową
-        charsToAdd = dicLine[len(charsToCut):dicLine.index(lineDelimeters[1])] 
-        out.append(core + charsToAdd)
+        lemma, wordInfo = dicLine.split(lineDelimeters[0])
+        wordType = wordInfo.split(':')[0]
+        out.append(lemma + ':' + wordType + ':')
     print(" ".join(out))
     sys.stdout.flush()
