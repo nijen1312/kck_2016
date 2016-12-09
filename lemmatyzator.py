@@ -20,6 +20,9 @@ while True:
     out = []
     #pętla for przetwarza każde słowo w wejściowej lini na formę podstawową
     for word in line:
-        out.append(dictionary[word]['LEMMA'] + ':' + dictionary[word]['INFO'].split(':')[0])
+        if word in dictionary:
+            out.append(dictionary[word]['LEMMA'] + ':' + dictionary[word]['INFO'].split(':')[0])
+        else:
+            out.append(word)
     print(" ".join(out))
     sys.stdout.flush()

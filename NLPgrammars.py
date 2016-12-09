@@ -58,16 +58,18 @@ while True:
             if token2 in words['KEY_WORDS'][key]:
                 token = token + ':' + key
                 break
-        if token.split(':')[1] == 'adv' or token.split(':')[1] == 'qub':
-                list_polecen.append(temporary_list)
-                temporary_list = []
-                temporary_list.append(token)
-                continue
-        else:
-            temporary_list.append(token)
-    if temporary_list[0].split(':')[0] in adv1:
-        list_polecen.insert(0,temporary_list)
-    else:
-        list_polecen.append(temporary_list)
+        list_polecen.append(token)
+    #     if token.split(':')[1] == 'adv' or token.split(':')[1] == 'qub':
+    #             list_polecen.append(temporary_list)
+    #             temporary_list = []
+    #             temporary_list.append(token)
+    #             continue
+    #     else:
+    #         temporary_list.append(token)
+    # if temporary_list[0].split(':')[0] in adv1:
+    #     list_polecen.insert(0,temporary_list)
+    # else:
+    # list_polecen.append(temporary_list)
+    
     print(list_polecen)
     sys.stdout.flush()
