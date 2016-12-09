@@ -3,7 +3,7 @@
 #modul odpowiada za sprowadzanie slow w zdaniu do ich form podstawowych
 #np. "jedź do bazy" zamienia na "jechać do baza"
 
-import sys, re
+import sys
 lineDelimeters = ['\t',]
 dicFile = open('dictionary.txt','r')
 dictionary = {}
