@@ -23,6 +23,6 @@ while True:
         if word in dictionary:
             out.append(dictionary[word]['LEMMA'] + ':' + dictionary[word]['INFO'].split(':')[0])
         else:
-            out.append(word)
+            out.append(word+':')
     print(" ".join(out))
     sys.stdout.flush()
