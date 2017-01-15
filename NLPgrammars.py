@@ -41,12 +41,14 @@ while True:
         list_polecen.append(token)
 
     prioritized=splitByPriority(list_polecen, words)
+    pattern=matchOrderRules(prioritized, len(list_polecen)-1)
+    shifted=UPDOWNRULE(list_polecen, prioritized,pattern)
 
     prioritized2 = []
     k = 0
     prioritized2.append([])
 
-    for list in prioritized:
+    for list in shifted:
         for elem in list:
             if elem[:elem.index(':')] in delimiters2:
                 k += 1
