@@ -2,14 +2,17 @@
 import sys
 from libNLP import *
 delimiters=[":",","]
+delimiters2=[",","oraz","ale","i","potem","później","następnie"]
 words = {}
 words['ACTION_WORDS'] = {}
 words['ORDER_WORDS'] = {}
-
+words['RULES'] = {}
 #laduje wyrazy z plików
 
 readWords(words,'ORDER_WORDS','order_words.txt',delimiters)
 readWords(words,'ACTION_WORDS','action_words.txt',delimiters)
+readWords(words,'RULES','rules.txt',delimiters+['|'])
+
 
 print(words)
 while True:
@@ -24,6 +27,21 @@ while True:
                 break
         list_polecen.append(token)
         prioritized=splitByPriority(list_polecen, words)
+
+    prioritized2 = []
+    k = 0
+    prioritized2.append([])
+
+    for list in prioritized:
+        for elem in list:
+            if elem[:elem.index(':')] in delimiters2:
+                k += 1
+                prioritized2.append([])
+            else:
+                prioritized2[k].append(elem)
+
+    print(prioritized2)
+    orders = rules(prioritized2,words['RULES'])
 #     #     if token.split(':')[1] == 'adv' or token.split(':')[1] == 'qub':
 #     #             list_polecen.append(temporary_list)
 #     #             temporary_list = []
@@ -35,7 +53,6 @@ while True:
 #     #     list_polecen.insert(0,temporary_list)
 #     # else:
 #     # list_polecen.append(temporary_list)
-#
-    print(list_polecen)
-    print(prioritized)
+
+    print(orders)
     sys.stdout.flush()
