@@ -116,8 +116,8 @@ def rules(prioritized,rulesHash):
             except:
                 continue
         # print(order)
-        print(rule_dict)
-        print(rules)
+        # print(rule_dict)
+        # print(rules)
 
         for rule in rules:
             rule = rule[0].split(',')
@@ -127,7 +127,7 @@ def rules(prioritized,rulesHash):
             for elem in rule:
                 if elem in rule_dict:
                     order.append(rule_dict[elem])
-                    print(order)
+                    # print(order)
                     licznik -= 1
                 else:
                     break
