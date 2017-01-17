@@ -9,6 +9,7 @@ import sys, re
 
 while True:
         line = sys.stdin.readline().strip().lower()
-        line = re.sub(r"\W"," ",line)
+        line = re.sub(r"[^\w,]"," ",line)
+        line = re.sub(r","," ,",line)
         print(line)
         sys.stdout.flush()

@@ -1,1 +1,2 @@
-najpierw,wcześniej,przedtem
+UP:najpierw,wcześniej,przedtem,na początku
+DOWN:na końcu

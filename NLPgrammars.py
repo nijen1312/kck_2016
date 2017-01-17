@@ -1,75 +1,74 @@
 #!/usr/bin/python3
 import sys
+from libNLP import *
 
-
-def chceckForPriority(line,orderWords):
-    "chcecks if there is order adv in text"
-    for word in orderWords:
-        if word in line:
-            return True
-        else:
-            return False
-def splitByPriority(lineList,orderAdvList):
-    "splits list of line into senteces by order adv"
-    orderSeparatorIndx = []
-    out = []
-    lineWithIndexes = enumerate(line)
-    for word in orderAdvList:
-        orderSeparatorIndx.extend([pos for pos,x in lineWithIndexes if x == word])
-    prev  = len(line-1)
-    for index in reversed(orderSeparatorIndx):
-        out.append(line[index+1:prev])
-        prev = index
-
-
-
+delimiters=[":",","]
+delimiters2=[",","oraz","ale","i","potem","później","następnie"]
 words = {}
-words['KEY_WORDS'] = {}
-words['ORDER_WORDS'] = []
+words['ACTION_WORDS'] = {}
+words['ORDER_WORDS'] = {}
+words['RULES'] = {}
+#laduje wyrazy z plików
 
-#laduje z hasla plików
-orderWordsFile = open('order_words.txt','r')
-orderWordsContent = orderWordsFile.readline()
-words['ORDER_WORDS'].extend(orderWordsContent.split(','))
+readWords(words,'ORDER_WORDS','order_words.txt',delimiters)
+readWords(words,'ACTION_WORDS','action_words.txt',delimiters)
+readWords(words,'RULES','rules.txt',delimiters+['|'])
 
-actionWordsFile = open('action_words.txt','r')
-actionWordsContent = actionWordsFile.readlines()
-for line in actionWordsContent:
-    line = line.rstrip().split(',')
-    print(line)
-    #nie trzeba sprawdzać czy czynnosc jest w words['KEY_WORDS']ionary bo kazda czynnosc jest unikalna
-    if line[0] not in words['KEY_WORDS']:
-        words['KEY_WORDS'][line[0]] = line[1:]
-    else:
-        words['KEY_WORDS'][line[0]].extend(line[1:])
-print(words['KEY_WORDS'])
-actionWordsFile.close()
 
-adv1 = ['najpierw']
-
+print(words)
 while True:
     line = sys.stdin.readline().split()
+    if "na:" in line and "końcu:" in line:
+        nIndx=line.index("na:")
+        kIndx=line.index("końcu:")
+        if nIndx == kIndx - 1:
+            line = line[:nIndx]+["na końcu:"]+line[kIndx+1:]
+
+    if "na:" in line and "początku:" in line:
+        nIndx=line.index("na:")
+        kIndx=line.index("początku:")
+        if nIndx == kIndx - 1:
+            line = line[:nIndx]+["na początku:"]+line[kIndx+1:]
+
     list_polecen = []
     temporary_list = []
-
     for token in line:
-        token2 = token.split(':')[0]
-        for key in words['KEY_WORDS']:
-            if token2 in words['KEY_WORDS'][key]:
+        word = token.split(':')[0]
+        for key in words['ACTION_WORDS']:
+            if word in words['ACTION_WORDS'][key]:
                 token = token + ':' + key
                 break
         list_polecen.append(token)
-    #     if token.split(':')[1] == 'adv' or token.split(':')[1] == 'qub':
-    #             list_polecen.append(temporary_list)
-    #             temporary_list = []
-    #             temporary_list.append(token)
-    #             continue
-    #     else:
-    #         temporary_list.append(token)
-    # if temporary_list[0].split(':')[0] in adv1:
-    #     list_polecen.insert(0,temporary_list)
-    # else:
-    # list_polecen.append(temporary_list)
-    
-    print(list_polecen)
+
+    prioritized=splitByPriority(list_polecen, words)
+    pattern=matchOrderRules(prioritized, len(list_polecen)-1)
+    shifted=UPDOWNRULE(list_polecen, prioritized,pattern)
+
+    prioritized2 = []
+    k = 0
+    prioritized2.append([])
+
+    for list in shifted:
+        for elem in list:
+            if elem[:elem.index(':')] in delimiters2:
+                k += 1
+                prioritized2.append([])
+            else:
+                prioritized2[k].append(elem)
+
+    print(prioritized2)
+    orders = rules(prioritized2,words['RULES'])
+
+#     #     if token.split(':')[1] == 'adv' or token.split(':')[1] == 'qub':
+#     #             list_polecen.append(temporary_list)
+#     #             temporary_list = []
+#     #             temporary_list.append(token)
+#     #             continue
+#     #     else:
+#     #         temporary_list.append(token)
+#     # if temporary_list[0].split(':')[0] in adv1:
+#     #     list_polecen.insert(0,temporary_list)
+#     # else:
+#     # list_polecen.append(temporary_list)
+    print(orders)
     sys.stdout.flush()
