@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="128" tileheight="128" nextobjectid="1">
- <tileset firstgid="1" name="road-tiles" tilewidth="128" tileheight="128" tilecount="20" columns="5">
-  <image source="road-tiles.png" width="640" height="512"/>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="128" tileheight="128" nextobjectid="6">
+ <tileset firstgid="1" name="road-tiles" tilewidth="128" tileheight="128" tilecount="24" columns="6">
+  <image source="road-tiles.png" width="768" height="512"/>
  </tileset>
- <layer name="map0" width="10" height="10">
+ <layer name="map0" width="50" height="50" offsetx="900.436" offsety="2605.1">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYCaAWYCYDYhZCWA+qDp2IBaEYg4keXYoH6aOE4i5oJgNzRxuMtTxADETFPMiqeOB8vkYSPMHNdUJIIUJLiwMxAAjRgMf
+   eJztmLsSQDAUBW8jDY1KPt+nmlGZwYgk3BO22C7OmXWJx2RmEwDAh+jM5i904qHV2bJHqJA5Jq4bLjxi3nlYM0SRmLF3Jx5anXiUdR7tY7kE5iHXiYdWZ+177m/zSH0/U/doIRMPrcy3O3me63V6eeR8zyp6tJCJh1YmHlqZeNwjFmam7v1n60o9xP+Llrrtjs/5PuwdrqunM//kER7IZB46nR4eAABbFh2fMyc=
   </data>
  </layer>
+ <objectgroup name="post" offsetx="899.385" offsety="2605.08">
+  <object id="2" name="poczta" x="3584" y="4992" width="128" height="128"/>
+ </objectgroup>
+ <objectgroup name="petrol" offsetx="899.33" offsety="2605.67">
+  <object id="3" name="orlen1" x="5120" y="2816" width="128" height="128"/>
+  <object id="4" name="orlen2" x="3072" y="1280" width="128" height="128"/>
+ </objectgroup>
 </map>
