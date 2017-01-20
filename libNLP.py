@@ -1,6 +1,8 @@
 
 def UPDOWNRULE(lineList,priorList,pattern):
-    if pattern[0]!='^UP':
+    if len(pattern) == 0:
+        return [lineList]
+    elif pattern[0]!='^UP':
         out=[]
         prev=0
         for word in priorList:
