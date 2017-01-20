@@ -43,7 +43,6 @@ while True:
     prioritized=splitByPriority(list_polecen, words)
     pattern=matchOrderRules(prioritized, len(list_polecen)-1)
     shifted=UPDOWNRULE(list_polecen, prioritized,pattern)
-
     prioritized2 = []
     k = 0
     prioritized2.append([])
@@ -58,17 +57,5 @@ while True:
 
     print(prioritized2)
     orders = rules(prioritized2,words['RULES'])
-
-#     #     if token.split(':')[1] == 'adv' or token.split(':')[1] == 'qub':
-#     #             list_polecen.append(temporary_list)
-#     #             temporary_list = []
-#     #             temporary_list.append(token)
-#     #             continue
-#     #     else:
-#     #         temporary_list.append(token)
-#     # if temporary_list[0].split(':')[0] in adv1:
-#     #     list_polecen.insert(0,temporary_list)
-#     # else:
-#     # list_polecen.append(temporary_list)
     print(orders)
     sys.stdout.flush()

@@ -1,5 +1,6 @@
 
 def UPDOWNRULE(lineList,priorList,pattern):
+    if pattern[0]!='^UP':
         out=[]
         prev=0
         for word in priorList:
@@ -15,6 +16,8 @@ def UPDOWNRULE(lineList,priorList,pattern):
             out.pop(2)
         out[0], out[1] = out[1], out[0]
         return out
+    else:
+        return [lineList[1:]]
 
 def chceckForPriority(line,orderWords):
     "chcecks if there is order adv in text"
