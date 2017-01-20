@@ -55,7 +55,7 @@ while True:
             else:
                 prioritized2[k].append(elem)
 
-    print(prioritized2)
+    # print(prioritized2)
     orders = rules(prioritized2,words['RULES'])
     print(orders)
     sys.stdout.flush()
