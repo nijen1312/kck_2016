@@ -7301,7 +7301,6 @@ przerwami	przerwa	subst:pl:inst:f	pospolita
 przerwach	przerwa	subst:pl:loc:f	pospolita
 przerw	przerwa	subst:pl:gen:f	pospolita
 przerwa	przerwa	subst:sg:nom:f	pospolita
-przerwę	przerwać	fin:sg:pri:perf	pospolita
 przerwij	przerwać	impt:sg:sec:perf	pospolita
 przerwawszy	przerwać	pant:perf	pospolita
 przerwą	przerwać	fin:pl:ter:perf	pospolita

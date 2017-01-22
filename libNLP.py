@@ -1,6 +1,15 @@
-
+def chceckForPriority(pattern):
+    "chcecks if there is order adv in text"
+    orderTags = ["UP","DOWN"]
+    for tag in pattern:
+        if (tag == orderTags[0] or tag == orderTags[0]+"$" or tag == "^"+orderTags[0]):
+            return True
+        elif(tag == orderTags[1] or tag == orderTags[1]+"$" or tag == "^"+orderTags[1]):
+            return True
+    return False
+    
 def UPDOWNRULE(lineList,priorList,pattern):
-    if len(pattern) == 0:
+    if len(pattern) == 0 or (not chceckForPriority(pattern)):
         return [lineList]
     elif pattern[0]!='^UP':
         out=[]
@@ -21,13 +30,6 @@ def UPDOWNRULE(lineList,priorList,pattern):
     else:
         return [lineList[1:]]
 
-def chceckForPriority(line,orderWords):
-    "chcecks if there is order adv in text"
-    for word in orderWords:
-        if word in line:
-            return True
-        else:
-            return False
 def matchOrderRules(orderIndex,len):
     out = []
     prev = 0
@@ -106,11 +108,11 @@ def readWords(wordsHash,wordsType,filename,delimiters):
 
 def rules(prioritized,rulesHash):
     orders = []
-    for list in prioritized:
+    for listElement in prioritized:
         order = []
         rules = []
         rule_dict = {}
-        for elem in list:
+        for elem in listElement:
             elem = elem.split(':')
             try:
                 if elem[2] in rulesHash:
@@ -126,7 +128,7 @@ def rules(prioritized,rulesHash):
 
         for rule in rules:
             rule = rule[0].split(',')
-            print(rule)
+            # print(rule)
             licznik = len(rule)
             order = []
             for elem in rule:
