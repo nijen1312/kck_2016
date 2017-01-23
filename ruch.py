@@ -36,7 +36,6 @@ class Graf:
   def __init__(self):
       self.wiechrzcholki = set()
 
-      # makes the default value for all vertices an empty list
       self.krawedzie = collections.defaultdict(list)
       self.wagi = {}
 
@@ -44,43 +43,28 @@ class Graf:
     self.wiechrzcholki.add(value)
 
   def add_edge(self, od_wierzcholka, do_wierzcholka, dystans):
-    if od_wierzcholka == do_wierzcholka: pass  # no cycles allowed
+    if od_wierzcholka == do_wierzcholka: pass  # bez cykli
     self.krawedzie[od_wierzcholka].append(do_wierzcholka)
     self.wagi[(od_wierzcholka, do_wierzcholka)] = dystans
 
-  # def __str__(self):
-  #   string = "Vertices: " + str(self.vertices) + "\n"
-  #   string += "Edges: " + str(self.edges) + "\n"
-  #   string += "Weights: " + str(self.weights)
-  #   return string
 
 def dijkstra(graf, start):
-  # initializations
   S = set()
 
-  # delta represents the length shortest distance paths from start -> v, for v in delta.
-  # We initialize it so that every vertex has a path of infinity (this line will break if you run python 2)
   delta = dict.fromkeys(list(graf.wiechrzcholki), math.inf)
   poprzednik = dict.fromkeys(list(graf.wiechrzcholki), None)
 
-  # then we set the path length of the start vertex to 0
   delta[start] = 0
 
-  # while there exists a vertex v not in S
-  while S != graf.wiechrzcholki:
-    # let v be the closest vertex that has not been visited...it will begin at 'start'
-    v = min((set(delta.keys()) - S), key=delta.get)
 
-    # for each neighbor of v not in S
+  while S != graf.wiechrzcholki:
+    v = min((set(delta.keys()) - S), key=delta.get)
     for sasiad in set(graf.krawedzie[v]) - S:
       nowa_sciezka = delta[v] + graf.wagi[v,sasiad]
 
-      # is the new path from neighbor through
       if nowa_sciezka < delta[sasiad]:
-        # since it's optimal, update the shortest path for neighbor
         delta[sasiad] = nowa_sciezka
 
-        # set the previous vertex of neighbor to v
         poprzednik[sasiad] = v
     S.add(v)
 
