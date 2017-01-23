@@ -41,11 +41,8 @@ while True:
         list_polecen.append(token)
 
     prioritized=splitByPriority(list_polecen, words)
-    print(prioritized)
     pattern=matchOrderRules(prioritized, len(list_polecen)-1)
-    print(pattern)
     shifted=UPDOWNRULE(list_polecen, prioritized,pattern)
-    print(shifted)
     prioritized2 = []
     k = 0
     prioritized2.append([])
