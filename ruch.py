@@ -16,6 +16,8 @@ from pyglet.window import key
 pyglet.resource.path.append(pyglet.resource.get_script_home())
 pyglet.resource.reindex()
 
+import collections
+import math
 import cocos
 from cocos import tiles, actions, layer
 from cocos.director import director
@@ -29,7 +31,77 @@ class DriveCar(actions.Driver):
         super(DriveCar, self).step(dt)
         scroller.set_focus(self.target.x, self.target.y)
 
-def main():
+class Graf:
+
+  def __init__(self):
+      self.wiechrzcholki = set()
+
+      # makes the default value for all vertices an empty list
+      self.krawedzie = collections.defaultdict(list)
+      self.wagi = {}
+
+  def add_vertex(self, value):
+    self.wiechrzcholki.add(value)
+
+  def add_edge(self, od_wierzcholka, do_wierzcholka, dystans):
+    if od_wierzcholka == do_wierzcholka: pass  # no cycles allowed
+    self.krawedzie[od_wierzcholka].append(do_wierzcholka)
+    self.wagi[(od_wierzcholka, do_wierzcholka)] = dystans
+
+  # def __str__(self):
+  #   string = "Vertices: " + str(self.vertices) + "\n"
+  #   string += "Edges: " + str(self.edges) + "\n"
+  #   string += "Weights: " + str(self.weights)
+  #   return string
+
+def dijkstra(graf, start):
+  # initializations
+  S = set()
+
+  # delta represents the length shortest distance paths from start -> v, for v in delta.
+  # We initialize it so that every vertex has a path of infinity (this line will break if you run python 2)
+  delta = dict.fromkeys(list(graf.wiechrzcholki), math.inf)
+  poprzednik = dict.fromkeys(list(graf.wiechrzcholki), None)
+
+  # then we set the path length of the start vertex to 0
+  delta[start] = 0
+
+  # while there exists a vertex v not in S
+  while S != graf.wiechrzcholki:
+    # let v be the closest vertex that has not been visited...it will begin at 'start'
+    v = min((set(delta.keys()) - S), key=delta.get)
+
+    # for each neighbor of v not in S
+    for sasiad in set(graf.krawedzie[v]) - S:
+      nowa_sciezka = delta[v] + graf.wagi[v,sasiad]
+
+      # is the new path from neighbor through
+      if nowa_sciezka < delta[sasiad]:
+        # since it's optimal, update the shortest path for neighbor
+        delta[sasiad] = nowa_sciezka
+
+        # set the previous vertex of neighbor to v
+        poprzednik[sasiad] = v
+    S.add(v)
+
+  return (delta, poprzednik)
+
+def shortest_path(graf, start, end):
+
+  delta, poprzednik = dijkstra(graf, start)
+
+  sciezka = []
+  wierzcholek = end
+
+  while wierzcholek is not None and wierzcholek is not start:
+    sciezka.append(wierzcholek)
+    wierzcholek = poprzednik[wierzcholek]
+
+  sciezka.reverse()
+  return sciezka
+
+if __name__ == "__main__":
+
     global keyboard, scroller
     from cocos.director import director
     director.init(width=800, height=600, autoscale=False, resizable=True)
@@ -46,55 +118,118 @@ def main():
     car = cocos.sprite.Sprite('carKCK.png')
     car_layer.add(car)
 
+    miejsca = {}
     startX = poi.objects[0].x
     startY = poi.objects[0].y
-    start = (startX, startY)
+    miejsca['start'] = (startX, startY)
 
     upX = poi.objects[1].x
     upY = poi.objects[1].y
-    up = (upX, upY)
+    miejsca['up'] = (upX, upY)
 
     bottomX = poi.objects[2].x
     bottomY = poi.objects[2].y
-    bottom = (bottomX, bottomY)
+    miejsca['bottom'] = (bottomX, bottomY)
 
     bottom1X = poi.objects[3].x
     bottom1Y = poi.objects[3].y
-    bottom1 = (bottom1X, bottom1Y)
+    miejsca['bottom1'] = (bottom1X, bottom1Y)
 
     stacjaX = obj.objects[0].x
     stacjaY = obj.objects[0].y
-    stacja = (stacjaX, stacjaY)
+    miejsca['stacja'] = (stacjaX, stacjaY)
 
     micX = obj.objects[1].x
     micY = obj.objects[1].y
-    mickiewicza = (micX, micY)
+    miejsca['mickiewicza'] = (micX, micY)
 
     kopX = obj.objects[2].x
     kopY = obj.objects[2].y
-    kopernika = (kopX, kopY)
-#najkrótsza ścieżka grafu
-#wizualizacja samochodu z paczka
+    miejsca['kopernika'] = (kopX, kopY)
 
     orlX = obj.objects[3].x
     orlY = obj.objects[3].y
-    orlicza = (orlX, orlY)
+    miejsca['orlicza'] = (orlX, orlY)
 
     pasX = obj.objects[4].x
     pasY = obj.objects[4].y
-    pascala = (pasX, pasY)
+    miejsca['pascala'] = (pasX, pasY)
 
     borX = obj.objects[5].x
     borY = obj.objects[5].y
-    borsuka = (borX, borY)
+    miejsca['borsuka'] = (borX, borY)
 
-    car.position = (start)
-    car.rotation = 90
-    if(car.position == start):
-        car.do( MoveTo((mickiewicza),2))
-    if(car.position == mickiewicza):
-        car.do( MoveTo((borsuka),2))
+    G = Graf()
+    G.add_vertex('start')
+    G.add_vertex('mickiewicza')
+    G.add_vertex('up')
+    G.add_vertex('borsuka')
+    G.add_vertex('bottom1')
+    G.add_vertex('stacja')
+    G.add_vertex('pascala')
+    G.add_vertex('orlicza')
+    G.add_vertex('bottom')
+    G.add_vertex('kopernika')
 
+    G.add_edge('start', 'mickiewicza', 9)
+    G.add_edge('mickiewicza', 'up', 2)
+    G.add_edge('up', 'borsuka', 2)
+    G.add_edge('borsuka', 'bottom1', 4)
+    G.add_edge('bottom1', 'stacja', 1)
+    G.add_edge('bottom1', 'pascala', 3)
+    G.add_edge('pascala', 'orlicza', 5)
+    G.add_edge('orlicza', 'bottom', 3)
+    G.add_edge('bottom', 'kopernika', 3)
+    G.add_edge('kopernika', 'start', 3)
+
+
+    G.add_edge('mickiewicza', 'start', 9)
+    G.add_edge('up', 'mickiewicza', 2)
+    G.add_edge('borsuka', 'up', 2)
+    G.add_edge('bottom1', 'borsuka', 4)
+    G.add_edge('stacja', 'bottom1', 1)
+    G.add_edge('pascala', 'bottom1', 3)
+    G.add_edge('orlicza', 'pascala', 5)
+    G.add_edge('bottom', 'orlicza', 3)
+    G.add_edge('kopernika', 'bottom', 3)
+    G.add_edge('start', 'kopernika', 3)
+
+    #   car.rotation = 90
+    #   if(car.position == start):
+    #       car.do( MoveTo((mickiewicza),2))
+    #   if(car.position == mickiewicza):
+    #       car.do( MoveTo((borsuka),2))
+
+
+#	print(dijkstra(G, 'c'))
+    print(shortest_path(G, 'mickiewicza', 'pascala'))
+
+    zupa = shortest_path(G, 'mickiewicza', 'pascala')
+
+	#print(G)
+
+    car.position = miejsca['start']
+    # car.runAction(aaa)
+    # time.sleep(10)
+    # car.do(MoveTo(miejsca['borsuka']))
+    # car.do(MoveTo(
+        # for i in zupa:
+            # MoveTo(miejsca[i], 5)
+    # ))
+
+    def www():
+        print('aaa')
+
+    action = CallFunc(www)
+
+
+    for i in zupa:
+        # car.do(MoveTo(miejsca['up'], 10) + MoveTo(miejsca['borsuka'], 5))
+        car.do( MoveTo((miejsca[i]),2))
+        action
+        # car.do(Sequence(DelayTime(10), MoveTo((miejsca[i]),2)))
+        # MoveTo((miejsca[i]),2)
+        # print(miejsca[i])
     # yy = poi.objects(name ='mickiewicza').y
     # z =(xx,yy)
 
@@ -139,9 +274,6 @@ def main():
     director.window.push_handlers(on_key_press)
 
     director.run(main_scene)
-
-if __name__ == '__main__':
-    main()
 
     # def on_key_press(key, modifier):
     #     if key == pyglet.window.key.Z:
