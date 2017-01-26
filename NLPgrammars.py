@@ -15,7 +15,7 @@ readWords(words,'ACTION_WORDS','action_words.txt',delimiters)
 readWords(words,'RULES','rules.txt',delimiters+['|'])
 
 
-print(words)
+# print(words)
 while True:
     line = sys.stdin.readline().split()
     if "na:" in line and "końcu:" in line:
