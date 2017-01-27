@@ -19,6 +19,12 @@ def przerwa():
     print(choice())
     kurier_status = "przerwa"
 
+odpMagazyn = ["OK, jade na magazyn.","Zjeżdżam na bazę.","Wracam do centrali."]
+odpZatankuj = ["OK, jadę zatankować.", "Jadę nalać do baku."]
+odpPrzerwa = ["OK, jadę sobie odpocząć.","Czas na przerwę !","Nareszczie odpoczynek."]
+odpOdbierz = ["Jadę odebrać paczkę z ","Odbieram paczkę z ","Jadę po paczkę na "]
+odpZawieź = ["Zawożę paczkę na ","Podrzucę paczkę na ", "Dostarczam paczkę na "]
+
 while True:
     print(kurier_status)
     orderLine=sys.stdin.readline()
