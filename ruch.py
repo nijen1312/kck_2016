@@ -5,16 +5,16 @@ import sys
 import os
 import time
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+# sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 testinfo = "s, q"
 tags = "tiles, Driver"
 
-import pyglet
-from pyglet.window import key
-
-pyglet.resource.path.append(pyglet.resource.get_script_home())
-pyglet.resource.reindex()
+# import pyglet
+# from pyglet.window import key
+#
+# pyglet.resource.path.append(pyglet.resource.get_script_home())
+# pyglet.resource.reindex()
 
 import collections
 import math
@@ -25,11 +25,11 @@ from cocos.actions import AccelDeccel, MoveTo, MoveBy, Reverse, Repeat
 from cocos.sprite import Sprite
 speeed = 80
 
-class DriveCar(actions.Driver):
-    def step(self, dt):
-        # handle input and move the car
-        super(DriveCar, self).step(dt)
-        scroller.set_focus(self.target.x, self.target.y)
+# class DriveCar(actions.Driver):
+#     def step(self, dt):
+#         # handle input and move the car
+#         super(DriveCar, self).step(dt)
+#         scroller.set_focus(self.target.x, self.target.y)
 
 class Graf:
 
@@ -94,7 +94,7 @@ if __name__ == "__main__":
     scroller = layer.ScrollingManager()
     test_layer = tiles.load('mapaKCK.tmx')['Warstwa Kafelków 1']
     obj = tiles.load('mapaKCK.tmx')['GameObjects']
-    poi = tiles.load('mapaKCK.tmx')['Points']
+    poi = tiles# sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..')).load('mapaKCK.tmx')['Points']
     scroller.add(test_layer)
 #0=start, 1=up, 2=bottom 3=bottom1,
 #0=stacja, 1=mickiewicza, 2=kopernika, 3=orlicza, 4= pascala, 5=borsuka
@@ -201,16 +201,14 @@ if __name__ == "__main__":
             # MoveTo(miejsca[i], 5)
     # ))
 
-    def www():
-        print('aaa')
 
-    action = CallFunc(www)
 
 
     for i in zupa:
+        movment+=MoveTo((miejsca[i]),2)
         # car.do(MoveTo(miejsca['up'], 10) + MoveTo(miejsca['borsuka'], 5))
-        car.do( MoveTo((miejsca[i]),2))
-        action
+    car.do(movement)
+
         # car.do(Sequence(DelayTime(10), MoveTo((miejsca[i]),2)))
         # MoveTo((miejsca[i]),2)
         # print(miejsca[i])
@@ -223,41 +221,42 @@ if __name__ == "__main__":
     # orl =  (xorl,yorl)
     # car.do( MoveTo((orl),2))
 
-    car.do(DriveCar())
+    #car.do(DriveCar())
     scroller.add(car_layer)
 
     main_scene = cocos.scene.Scene(scroller)
-
-
-    keyboard = key.KeyStateHandler()
-    director.window.push_handlers(keyboard)
-
-    def on_key_press(key, modifier):#obsluga klawiatury
-        if key == pyglet.window.key.Z:
-            if scroller.scale == 0.25:
-                scroller.do(actions.ScaleTo(1, 0.5))
-            else:
-                scroller.do(actions.ScaleTo(.25, 0.5))
-        elif key == pyglet.window.key.D:
-            test_layer.set_debug(True)
-        elif key == pyglet.window.key.RIGHT:
-            car.rotation = 90
-            car.speed = speeed
-        elif key == pyglet.window.key.LEFT:
-            car.rotation = -90
-            car.speed = speeed
-        elif key == pyglet.window.key.UP:
-            car.rotation = 0
-            car.speed = speeed
-        elif key == pyglet.window.key.DOWN:
-            car.rotation = 180
-            car.speed = speeed
-        elif key == pyglet.window.key.SPACE:
-            car.speed = 0
-
-    director.window.push_handlers(on_key_press)
-
     director.run(main_scene)
+
+
+
+    # keyboard = key.KeyStateHandler()
+    # director.window.push_handlers(keyboard)
+    #
+    # def on_key_press(key, modifier):#obsluga klawiatury
+    #     if key == pyglet.window.key.Z:
+    #         if scroller.scale == 0.25:
+    #             scroller.do(actions.ScaleTo(1, 0.5))
+    #         else:
+    #             scroller.do(actions.ScaleTo(.25, 0.5))
+    #     elif key == pyglet.window.key.D:
+    #         test_layer.set_debug(True)
+    #     elif key == pyglet.window.key.RIGHT:
+    #         car.rotation = 90
+    #         car.speed = speeed
+    #     elif key == pyglet.window.key.LEFT:
+    #         car.rotation = -90
+    #         car.speed = speeed
+    #     elif key == pyglet.window.key.UP:
+    #         car.rotation = 0
+    #         car.speed = speeed
+    #     elif key == pyglet.window.key.DOWN:
+    #         car.rotation = 180
+    #         car.speed = speeed
+    #     elif key == pyglet.window.key.SPACE:
+    #         car.speed = 0
+    #
+    # director.window.push_handlers(on_key_press)
+
 
     # def on_key_press(key, modifier):
     #     if key == pyglet.window.key.Z:
