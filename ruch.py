@@ -1,35 +1,22 @@
-from __future__ import division, print_function, unicode_literals
-
-# This code is so you can run the samples without installing the package
-import sys
-import os
-import time
+#from __future__ import division, print_function, unicode_literals
 
 # sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
-testinfo = "s, q"
-tags = "tiles, Driver"
+# testinfo = "s, q"
+# tags = "tiles, Driver"
 
-# import pyglet
-# from pyglet.window import key
-#
-# pyglet.resource.path.append(pyglet.resource.get_script_home())
-# pyglet.resource.reindex()
 
 import collections
 import math
 import cocos
-from cocos import tiles, actions, layer
+from cocos import tiles, layer
+#from cocos import tiles, actions, layer
 from cocos.director import director
-from cocos.actions import AccelDeccel, MoveTo, MoveBy, Reverse, Repeat
-from cocos.sprite import Sprite
-speeed = 80
+from cocos.actions import MoveTo
+#from cocos.actions import AccelDeccel, MoveTo, Reverse, Repeat
+#from cocos.sprite import Sprite
+#speeed = 80
 
-# class DriveCar(actions.Driver):
-#     def step(self, dt):
-#         # handle input and move the car
-#         super(DriveCar, self).step(dt)
-#         scroller.set_focus(self.target.x, self.target.y)
 
 class Graf:
 
@@ -86,7 +73,7 @@ def shortest_path(graf, start, end):
 
 if __name__ == "__main__":
 
-    global keyboard, scroller
+    global scroller
     from cocos.director import director
     director.init(width=800, height=600, autoscale=False, resizable=True)
 
@@ -94,7 +81,7 @@ if __name__ == "__main__":
     scroller = layer.ScrollingManager()
     test_layer = tiles.load('mapaKCK.tmx')['Warstwa Kafelków 1']
     obj = tiles.load('mapaKCK.tmx')['GameObjects']
-    poi = tiles# sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..')).load('mapaKCK.tmx')['Points']
+    poi = tiles.load('mapaKCK.tmx')['Points']
     scroller.add(test_layer)
 #0=start, 1=up, 2=bottom 3=bottom1,
 #0=stacja, 1=mickiewicza, 2=kopernika, 3=orlicza, 4= pascala, 5=borsuka
@@ -178,60 +165,29 @@ if __name__ == "__main__":
     G.add_edge('kopernika', 'bottom', 3)
     G.add_edge('start', 'kopernika', 3)
 
-    #   car.rotation = 90
-    #   if(car.position == start):
-    #       car.do( MoveTo((mickiewicza),2))
-    #   if(car.position == mickiewicza):
-    #       car.do( MoveTo((borsuka),2))
-
-
 #	print(dijkstra(G, 'c'))
     print(shortest_path(G, 'mickiewicza', 'pascala'))
 
-    zupa = shortest_path(G, 'mickiewicza', 'pascala')
+    short = shortest_path(G, 'mickiewicza', 'pascala')
 
 	#print(G)
 
     car.position = miejsca['start']
-    # car.runAction(aaa)
-    # time.sleep(10)
-    # car.do(MoveTo(miejsca['borsuka']))
-    # car.do(MoveTo(
-        # for i in zupa:
-            # MoveTo(miejsca[i], 5)
-    # ))
+    car.rotation = 90
+    ruch = (MoveTo(miejsca['start'],2))
+    for i in short:
+        ruch += MoveTo(miejsca[i], 2)
+    car.do(ruch)
 
-
-
-
-    for i in zupa:
-        movment+=MoveTo((miejsca[i]),2)
-        # car.do(MoveTo(miejsca['up'], 10) + MoveTo(miejsca['borsuka'], 5))
-    car.do(movement)
-
-        # car.do(Sequence(DelayTime(10), MoveTo((miejsca[i]),2)))
-        # MoveTo((miejsca[i]),2)
-        # print(miejsca[i])
-    # yy = poi.objects(name ='mickiewicza').y
-    # z =(xx,yy)
-
-#    car.rotation = -180
-    # yorl = obj.objects[2].y
-    # xorl = obj.objects[2].x
-    # orl =  (xorl,yorl)
-    # car.do( MoveTo((orl),2))
-
-    #car.do(DriveCar())
+    # car.do(DriveCar())
     scroller.add(car_layer)
-
     main_scene = cocos.scene.Scene(scroller)
     director.run(main_scene)
 
 
-
     # keyboard = key.KeyStateHandler()
     # director.window.push_handlers(keyboard)
-    #
+
     # def on_key_press(key, modifier):#obsluga klawiatury
     #     if key == pyglet.window.key.Z:
     #         if scroller.scale == 0.25:
@@ -254,8 +210,8 @@ if __name__ == "__main__":
     #         car.speed = speeed
     #     elif key == pyglet.window.key.SPACE:
     #         car.speed = 0
-    #
-    # director.window.push_handlers(on_key_press)
+
+    #director.window.push_handlers(on_key_press)
 
 
     # def on_key_press(key, modifier):
@@ -267,48 +223,3 @@ if __name__ == "__main__":
     #     elif key == pyglet.window.key.D:
     #        test_layer.set_debug(True)
     #director.window.push_handlers(on_key_press)
-
-#    director.run(main_scene)
-
-    #object_layer = test_layer['GameObjects']
-    #move = MoveBy((20,300), duration=1)
-    #car.do(move)
-    #start = test_layer['GameObjects'][1]
-    #car.positon = (kopernika.x,kopernika.y)
-#    tmxdata = TiledMap('mapaTMX.tmx')
-
-
-#PSEUDOKOD
-# class Time(czas)
-#    props = tmxdata.get_layer_by_name("mickiewicza").properties
-#     czas = 2000s
-#     if(czas == 0):
-#         print('GameOver')
-#         exit()
-#
-# paczkiDoDostarczenia = 2
-# paczkiDoOdbioru = 2
-# class Paczki(miejsce)
-#     if(miejsce == 'mickiwicza' or miejsce == 'kopernika'):
-#         if(miejsce == 'mickiewicza'):
-#             MoveTo(miejsce)
-#             MoveTo('magazyn')
-#             paczkiDoDostaraczenia = paczkiDoDostarczenia -1;
-#
-#             if(paczkiDoDostarczenia ==0 and paczkiDoOdbioru == 0):
-#                 print('YouWin')
-#
-#         if(miejsce == 'kopernika')
-#             MoveTo(miejsce)
-#             MoveTo('magazyn')
-#             paczkiDoDostaraczenia = paczkiDoDostarczenia -1;
-#
-#             if(paczkiDoDostarczenia ==0 and paczkiDoOdbioru == 0):
-#                 print('YouWin')
-#     elif(miejsce == 'stacja'):
-#         czas = 200s
-#     else:
-#         MoveTo(miejsce)
-#         paczki= paczki -1
-#         if(paczkiDoDostarczenia ==0 and paczkiDoOdbioru == 0):
-#             print('YouWin')
