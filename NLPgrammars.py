@@ -57,5 +57,8 @@ while True:
 
     # print(prioritized2)
     orders = rules(prioritized2,words['RULES'])
-    print(orders)
+    with open("NLP.out", mode="w") as outFile:
+        outFile.write(str(orders)+'\n')
+
+    # print(orders)
     sys.stdout.flush()
