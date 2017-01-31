@@ -84,15 +84,17 @@ class DriveCar(actions.Driver):
             zadanie = pl[0]
             if(len(pl) == 2):
               zadanie2 = pl[1]
+              rozkaz2 = zadanie2[0]
             rozkaz = zadanie[0]
             if(rozkaz == 'ODBIERZ' or rozkaz == 'ZAWIEĹą'):
               adres = zadanie[2]
             if(rozkaz == 'JEDĹą'):
               adres = zadanie[1]
-##            if(rozkaz2 == 'ODBIERZ' or rozkaz2 == 'ZAWIEĹą'):
-##              adres2 = zadanie2[2]
-##            if(rozkaz2 == 'JEDĹą'):
-##              adres2 = zadanie2[1]
+            if(len(pl) == 2):
+              if(rozkaz2 == 'ODBIERZ' or rozkaz2 == 'ZAWIEĹą'):
+                adres2 = zadanie2[2]
+              if(rozkaz2 == 'JEDĹą'):
+                adres2 = zadanie2[1]
             inAction=True
             startAction=True
             
