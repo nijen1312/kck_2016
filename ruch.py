@@ -100,7 +100,7 @@ class DriveCar(actions.Driver):
           packAdres = random.choice(list(paczki))
           paczki[packAdres].opacity = 255
           cel = packAdres
-          while(cel == packAdres):
+          while(cel == packAdres or cel == cAdres):
             cel = random.choice(list(paczki))
           print("musze odebrac paczke z " + packAdres + " i dostarczyc paczke na " + cel)
           isPack = True
