@@ -71,7 +71,7 @@ global inAction, startAction, doTask, G, miejsca, paczki
 
 class DriveCar(actions.Driver):
     def step(self, dt):
-        global inAction, startAction, doTask, cAdres, isPack, cel, ruch
+        global inAction, startAction, doTask, cAdres, isPack, cel, ruch, packAdres, isPicked
 
         if(not inAction):
             plik = open('NLP.out')
@@ -81,20 +81,21 @@ class DriveCar(actions.Driver):
                 plik.close()
             pl = eval(tekst)
             
+            
+##            if(len(pl) == 2):
+##              zadanie2 = pl[1]
+##              rozkaz2 = zadanie2[0]
             zadanie = pl[0]
-            if(len(pl) == 2):
-              zadanie2 = pl[1]
-              rozkaz2 = zadanie2[0]
             rozkaz = zadanie[0]
             if(rozkaz == 'ODBIERZ' or rozkaz == 'ZAWIEĹą'):
               adres = zadanie[2]
             if(rozkaz == 'JEDĹą'):
               adres = zadanie[1]
-            if(len(pl) == 2):
-              if(rozkaz2 == 'ODBIERZ' or rozkaz2 == 'ZAWIEĹą'):
-                adres2 = zadanie2[2]
-              if(rozkaz2 == 'JEDĹą'):
-                adres2 = zadanie2[1]
+##            if(len(pl) == 2):
+##              if(rozkaz2 == 'ODBIERZ' or rozkaz2 == 'ZAWIEĹą'):
+##                adres2 = zadanie2[2]
+##              if(rozkaz2 == 'JEDĹą'):
+##                adres2 = zadanie2[1]
             inAction=True
             startAction=True
             
@@ -106,6 +107,7 @@ class DriveCar(actions.Driver):
             cel = random.choice(list(paczki))
           print("musze odebrac paczke z " + packAdres + " i dostarczyc paczke na " + cel)
           isPack = True
+          isPicked = False
         
         if(startAction):
             startAction = False
@@ -132,34 +134,46 @@ class DriveCar(actions.Driver):
                 paczki['mickiewicza'].opacity = 0
                 inAction = False
                 cAdres = 'mickiewicza'
-                if(cel == 'mickiewicza'):
+                if(packAdres == 'mickiweicza'):
+                  isPicked = True
+                if(cel == 'mickiewicza' and isPicked):
                   isPack = False
             if(self.target.position == miejsca['orlicza']):
                 paczki['orlicza'].opacity = 0
                 inAction = False
                 cAdres = 'orlicza'
-                if(cel == 'orlicza'):
+                if(packAdres == 'orlicza'):
+                  isPicked = True
+                if(cel == 'orlicza' and isPicked):
                   isPack = False
             if(self.target.position == miejsca['pascala']):
                 paczki['pascala'].opacity = 0
                 inAction = False
                 cAdres = 'pascala'
-                if(cel == 'pascala'):
+                if(packAdres == 'pascala'):
+                  isPicked = True
+                if(cel == 'pascala' and isPicked):
                   isPack = False
             if(self.target.position == miejsca['kopernika']):
                 paczki['kopernika'].opacity = 0
                 inAction = False
                 cAdres = 'kopernika'
-                if(cel == 'kopernika'):
+                if(packAdres == 'kopernika'):
+                  isPicked = True
+                if(cel == 'kopernika' and isPicked):
                   isPack = False
             if(self.target.position == miejsca['borsuka']):
                 paczki['borsuka'].opacity = 0
                 inAction = False
                 cAdres = 'borsuka'
+                if(packAdres == 'borsuka'):
+                  isPicked = True
+                if(cel == 'borsuka' and isPicked):
+                  isPack = False
             if(self.target.position == miejsca['stacja']):
                 inAction = False
                 cAdres = 'stacja'
-                if(cel == 'borsuka'):
+                if(cel == 'borsuka' and isPicked):
                   isPack = False
             
             # handle input and move the car
@@ -169,11 +183,13 @@ class DriveCar(actions.Driver):
 
 
 def main():
-    global inAction, startAction, doTask, isPack, cel, ruch
+    global inAction, startAction, doTask, isPack, cel, ruch, isPicked, packAdres
+    isPiscked = False
     isPack = False
     inAction = False
     doTask = True
     startAction = False
+    packAdres = ''
     global scroller
     from cocos.director import director
     director.init(width=800, height=600, autoscale=False, resizable=True)
