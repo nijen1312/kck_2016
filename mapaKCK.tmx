@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="14" height="11" tilewidth="50" tileheight="52" nextobjectid="11">
- <tileset firstgid="1" name="mapaPNG3" tilewidth="50" tileheight="52" tilecount="154" columns="14">
+ <tileset firstgid="1" name="mapaPNG3" tilewidth="50" tileheight="52" tilecount="154">
   <image source="mapaKCK.png" width="700" height="572"/>
  </tileset>
  <layer name="Warstwa Kafelków 1" width="14" height="11">
@@ -25,7 +25,7 @@
   <object id="4" name="bottom1" x="512" y="303" width="10" height="10"/>
  </objectgroup>
  <objectgroup name="GameObjects">
-  <object id="5" name="stacja" x="594" y="303" width="10" height="10"/>
+  <object id="5" name="stacja" x="555" y="303" width="10" height="10"/>
   <object id="6" name="mickiewicza" x="440" y="78" width="10" height="10"/>
   <object id="7" name="kopernika" x="132" y="190" width="10" height="10"/>
   <object id="8" name="orlicza" x="230" y="303" width="10" height="10"/>

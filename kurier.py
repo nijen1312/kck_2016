@@ -21,29 +21,24 @@ from cocos import tiles, actions, layer, collision_model as cm
 speeed = 666
 collision_manager = cm.CollisionManagerBruteForce() #menager kolizji
 orlenColl = cm.CollisionManagerBruteForce() #menager kolizji dla stacji paliw
-paliwo = 20000
+x = 0
 ##/global
 
 class DriveCar(actions.Driver):
     def step(self, dt):
         orlen = set(orlenColl.known_objs())
-        global x, paliwo
-        paliwo -= 1
-        print(paliwo)
+        global x 
                     
         collisions = set(collision_manager.objs_colliding(self.target))
         if collisions is not None:
             if orlen.intersection(collisions): #jesli z ktoras ze stacji wystepuje kolizja
                 print("Witamy na stacji!" + str(x))
-                paliwo = 20000
                 x += 1
                         
         self.target.cshape.center = self.target.position #aktualizacja pozycji Cshape
 
         super(DriveCar, self).step(dt)
-        #self.target.do(actions.MoveTo((orlen.pop().position),3))
         scroller.set_focus(self.target.x, self.target.y)
-        
 
 def main():
     global keyboard, scroller
@@ -65,8 +60,6 @@ def main():
     car_layer = layer.ScrollableLayer()
     car = cocos.sprite.Sprite('car.png')
     car_layer.add(car)
-    licznik = cocos.sprite.Sprite('car.png')
-    car_layer.add(licznik)
     car.position = (3584, 1280)
     car.cshape = cm.AARectShape(
         car.position,
@@ -76,13 +69,11 @@ def main():
     collision_manager.add(car) #dodanie auta do managera kolizji
 
     scroller = layer.ScrollingManager()
-    map_layer = tiles.load('road-map.tmx')['map0']
-    scroller.add(map_layer)
+    test_layer = tiles.load('road-map.tmx')['map0']
+    scroller.add(test_layer)
     scroller.add(car_layer)
-    
     scroller.do(actions.ScaleTo(.25, 0.5))
     
-    car.do(actions.MoveTo((1,1),3))
     car.do(DriveCar())##DRIVE    
 
     main_scene = cocos.scene.Scene(scroller)
