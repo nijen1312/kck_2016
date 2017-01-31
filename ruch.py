@@ -71,7 +71,7 @@ global inAction, startAction, doTask, G, miejsca, paczki
 
 class DriveCar(actions.Driver):
     def step(self, dt):
-        global inAction, startAction, doTask, cAdres, isPack, cel
+        global inAction, startAction, doTask, cAdres, isPack, cel, ruch
 
         if(not inAction):
             plik = open('NLP.out')
@@ -80,17 +80,28 @@ class DriveCar(actions.Driver):
             finally:
                 plik.close()
             pl = eval(tekst)
+            
             zadanie = pl[0]
+            if(len(pl) == 2):
+              zadanie2 = pl[1]
             rozkaz = zadanie[0]
-            if(rozkaz == 'JEDĹą' or rozkaz == 'ODBIERZ' or rozkaz == 'ZAWIEĹą'):
+            if(rozkaz == 'ODBIERZ' or rozkaz == 'ZAWIEĹą'):
+              adres = zadanie[2]
+            if(rozkaz == 'JEDĹą'):
               adres = zadanie[1]
+##            if(rozkaz2 == 'ODBIERZ' or rozkaz2 == 'ZAWIEĹą'):
+##              adres2 = zadanie2[2]
+##            if(rozkaz2 == 'JEDĹą'):
+##              adres2 = zadanie2[1]
             inAction=True
             startAction=True
             
         if(not isPack):
           packAdres = random.choice(list(paczki))
           paczki[packAdres].opacity = 255
-          cel = random.choice(list(paczki))
+          cel = packAdres
+          while(cel == packAdres):
+            cel = random.choice(list(paczki))
           print("musze odebrac paczke z " + packAdres + " i dostarczyc paczke na " + cel)
           isPack = True
         
@@ -106,16 +117,13 @@ class DriveCar(actions.Driver):
                 for i in shortest_path(G, cAdres, 'stacja'):
                   ruch += MoveTo(miejsca[i], 2)
                 self.target.do(ruch)
-                startAction = False
             if(rozkaz == 'ZAWIEĹą'):
                 ruch = MoveTo(self.target.position,0)
                 for i in shortest_path(G, cAdres, adres.lower()):
                   ruch += MoveTo(miejsca[i], 2)
                 self.target.do(ruch)
             if(rozkaz == 'ODPOCZNIJ'):
-                print('Odpoczywam')
-            
-                
+                print('Odpoczywam')               
 
         if(inAction):
             if(self.target.position == miejsca['mickiewicza']):
@@ -159,7 +167,7 @@ class DriveCar(actions.Driver):
 
 
 def main():
-    global inAction, startAction, doTask, isPack, cel
+    global inAction, startAction, doTask, isPack, cel, ruch
     isPack = False
     inAction = False
     doTask = True
@@ -177,7 +185,7 @@ def main():
 #0=start, 1=up, 2=bottom 3=bottom1,
 #0=stacja, 1=mickiewicza, 2=kopernika, 3=orlicza, 4= pascala, 5=borsuka
     car_layer = layer.ScrollableLayer()
-    car = cocos.sprite.Sprite('car.png')
+    car = cocos.sprite.Sprite('carKCK.png')
     car_layer.add(car)
 
     global miejsca
