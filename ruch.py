@@ -5,18 +5,14 @@
 # testinfo = "s, q"
 # tags = "tiles, Driver"
 
-
 import collections
 import math
 import cocos
-from cocos import tiles, layer
-#from cocos import tiles, actions, layer
+import random
+import sys
+from cocos import tiles, layer, actions
 from cocos.director import director
 from cocos.actions import MoveTo
-#from cocos.actions import AccelDeccel, MoveTo, Reverse, Repeat
-#from cocos.sprite import Sprite
-#speeed = 80
-
 
 class Graf:
 
@@ -71,8 +67,103 @@ def shortest_path(graf, start, end):
   sciezka.reverse()
   return sciezka
 
-if __name__ == "__main__":
+global inAction, startAction, doTask, G, miejsca, paczki
 
+class DriveCar(actions.Driver):
+    def step(self, dt):
+        global inAction, startAction, doTask, cAdres, isPack, cel
+
+        if(not inAction):
+            plik = open('NLP.out')
+            try:
+                tekst = plik.read()
+            finally:
+                plik.close()
+            pl = eval(tekst)
+            zadanie = pl[0]
+            rozkaz = zadanie[0]
+            if(rozkaz == 'JEDĹą' or rozkaz == 'ODBIERZ' or rozkaz == 'ZAWIEĹą'):
+              adres = zadanie[1]
+            inAction=True
+            startAction=True
+            
+        if(not isPack):
+          packAdres = random.choice(list(paczki))
+          paczki[packAdres].opacity = 255
+          cel = random.choice(list(paczki))
+          print("musze odebrac paczke z " + packAdres + " i dostarczyc paczke na " + cel)
+          isPack = True
+        
+        if(startAction):
+            startAction = False
+            if(rozkaz == 'ODBIERZ' or rozkaz == 'JEDĹą'):
+                ruch = MoveTo(self.target.position,0)
+                for i in shortest_path(G, cAdres, adres.lower()):
+                  ruch += MoveTo(miejsca[i], 2)
+                self.target.do(ruch)
+            if(rozkaz == 'ZATANKUJ'):
+                ruch = MoveTo(self.target.position,0)
+                for i in shortest_path(G, cAdres, 'stacja'):
+                  ruch += MoveTo(miejsca[i], 2)
+                self.target.do(ruch)
+                startAction = False
+            if(rozkaz == 'ZAWIEĹą'):
+                ruch = MoveTo(self.target.position,0)
+                for i in shortest_path(G, cAdres, adres.lower()):
+                  ruch += MoveTo(miejsca[i], 2)
+                self.target.do(ruch)
+            if(rozkaz == 'ODPOCZNIJ'):
+                print('Odpoczywam')
+            
+                
+
+        if(inAction):
+            if(self.target.position == miejsca['mickiewicza']):
+                paczki['mickiewicza'].opacity = 0
+                inAction = False
+                cAdres = 'mickiewicza'
+                if(cel == 'mickiewicza'):
+                  isPack = False
+            if(self.target.position == miejsca['orlicza']):
+                paczki['orlicza'].opacity = 0
+                inAction = False
+                cAdres = 'orlicza'
+                if(cel == 'orlicza'):
+                  isPack = False
+            if(self.target.position == miejsca['pascala']):
+                paczki['pascala'].opacity = 0
+                inAction = False
+                cAdres = 'pascala'
+                if(cel == 'pascala'):
+                  isPack = False
+            if(self.target.position == miejsca['kopernika']):
+                paczki['kopernika'].opacity = 0
+                inAction = False
+                cAdres = 'kopernika'
+                if(cel == 'kopernika'):
+                  isPack = False
+            if(self.target.position == miejsca['borsuka']):
+                paczki['borsuka'].opacity = 0
+                inAction = False
+                cAdres = 'borsuka'
+            if(self.target.position == miejsca['stacja']):
+                inAction = False
+                cAdres = 'stacja'
+                if(cel == 'borsuka'):
+                  isPack = False
+            
+            # handle input and move the car
+
+        super(DriveCar, self).step(dt)
+        scroller.set_focus(self.target.x, self.target.y)
+
+
+def main():
+    global inAction, startAction, doTask, isPack, cel
+    isPack = False
+    inAction = False
+    doTask = True
+    startAction = False
     global scroller
     from cocos.director import director
     director.init(width=800, height=600, autoscale=False, resizable=True)
@@ -86,10 +177,13 @@ if __name__ == "__main__":
 #0=start, 1=up, 2=bottom 3=bottom1,
 #0=stacja, 1=mickiewicza, 2=kopernika, 3=orlicza, 4= pascala, 5=borsuka
     car_layer = layer.ScrollableLayer()
-    car = cocos.sprite.Sprite('carKCK.png')
+    car = cocos.sprite.Sprite('car.png')
     car_layer.add(car)
 
+    global miejsca
+    global paczki
     miejsca = {}
+    paczki = {}
     startX = poi.objects[0].x
     startY = poi.objects[0].y
     miejsca['start'] = (startX, startY)
@@ -130,6 +224,28 @@ if __name__ == "__main__":
     borY = obj.objects[5].y
     miejsca['borsuka'] = (borX, borY)
 
+    paczki['mickiewicza'] = cocos.sprite.Sprite('paczka.png')
+    paczki['orlicza'] = cocos.sprite.Sprite('paczka.png')
+    paczki['pascala'] = cocos.sprite.Sprite('paczka.png')
+    paczki['kopernika'] = cocos.sprite.Sprite('paczka.png')
+    paczki['borsuka'] = cocos.sprite.Sprite('paczka.png')
+    paczki['mickiewicza'].position = miejsca['mickiewicza']
+    paczki['orlicza'].position = miejsca['orlicza']
+    paczki['pascala'].position = miejsca['pascala']
+    paczki['kopernika'].position = miejsca['kopernika']
+    paczki['borsuka'].position = miejsca['borsuka']
+    car_layer.add(paczki['mickiewicza'])
+    car_layer.add(paczki['orlicza'])
+    car_layer.add(paczki['pascala'])
+    car_layer.add(paczki['kopernika'])
+    car_layer.add(paczki['borsuka'])
+    paczki['mickiewicza'].opacity = 0
+    paczki['orlicza'].opacity = 0
+    paczki['pascala'].opacity = 0
+    paczki['kopernika'].opacity = 0
+    paczki['borsuka'].opacity = 0
+    
+    global G
     G = Graf()
     G.add_vertex('start')
     G.add_vertex('mickiewicza')
@@ -153,7 +269,6 @@ if __name__ == "__main__":
     G.add_edge('bottom', 'kopernika', 3)
     G.add_edge('kopernika', 'start', 3)
 
-
     G.add_edge('mickiewicza', 'start', 9)
     G.add_edge('up', 'mickiewicza', 2)
     G.add_edge('borsuka', 'up', 2)
@@ -165,26 +280,25 @@ if __name__ == "__main__":
     G.add_edge('kopernika', 'bottom', 3)
     G.add_edge('start', 'kopernika', 3)
 
-#	print(dijkstra(G, 'c'))
     print(shortest_path(G, 'mickiewicza', 'pascala'))
+    print( paczki[random.choice(list(paczki))].position )
 
     short = shortest_path(G, 'mickiewicza', 'pascala')
 
-	#print(G)
-
     car.position = miejsca['start']
     car.rotation = 90
-    ruch = (MoveTo(miejsca['start'],2))
-    for i in short:
-        ruch += MoveTo(miejsca[i], 2)
-    car.do(ruch)
-
-    # car.do(DriveCar())
+    
+    global cAdres
+    cAdres = 'start'
+    car.do(DriveCar())
     scroller.add(car_layer)
     main_scene = cocos.scene.Scene(scroller)
     director.run(main_scene)
 
-
+if __name__ == "__main__":
+  main()
+    
+    
     # keyboard = key.KeyStateHandler()
     # director.window.push_handlers(keyboard)
 
