@@ -59,7 +59,7 @@ def shortest_path(graf, start, end):
 
   sciezka = []
   wierzcholek = end
-
+  
   while wierzcholek is not None and wierzcholek is not start:
     sciezka.append(wierzcholek)
     wierzcholek = poprzednik[wierzcholek]
@@ -87,9 +87,9 @@ class DriveCar(actions.Driver):
 ##              rozkaz2 = zadanie2[0]
             zadanie = pl[0]
             rozkaz = zadanie[0]
-            if(rozkaz == 'ODBIERZ' or rozkaz == 'ZAWIEŹ'):
+            if(rozkaz == 'ODBIERZ' or rozkaz == 'ZAWIEĹą'):
               adres = zadanie[2]
-            if(rozkaz == 'JEDŹ'):
+            if(rozkaz == 'JEDĹą'):
               adres = zadanie[1]
 ##            if(len(pl) == 2):
 ##              if(rozkaz2 == 'ODBIERZ' or rozkaz2 == 'ZAWIEĹą'):
@@ -113,7 +113,7 @@ class DriveCar(actions.Driver):
         
         if(startAction):
             startAction = False
-            if(rozkaz == 'ODBIERZ' or rozkaz == 'JEDŹ'):
+            if(rozkaz == 'ODBIERZ' or rozkaz == 'JEDĹą'):
                 ruch = MoveTo(self.target.position,0)
                 for i in shortest_path(G, cAdres, adres.lower()):
                   ruch += MoveTo(miejsca[i], 2)
@@ -123,13 +123,18 @@ class DriveCar(actions.Driver):
                 for i in shortest_path(G, cAdres, 'stacja'):
                   ruch += MoveTo(miejsca[i], 2)
                 self.target.do(ruch)
-            if(rozkaz == 'ZAWIEŹ'):
+            if(rozkaz == 'ZAWIEĹą'):
                 ruch = MoveTo(self.target.position,0)
                 for i in shortest_path(G, cAdres, adres.lower()):
                   ruch += MoveTo(miejsca[i], 2)
                 self.target.do(ruch)
             if(rozkaz == 'ODPOCZNIJ'):
-                print('Odpoczywam')               
+                print('Odpoczywam')
+            if(rozkaz == 'PRZERWA'):
+                ruch = MoveTo(self.target.position,0)
+                for i in shortest_path(G, cAdres, 'start'):
+                  ruch += MoveTo(miejsca[i], 2)
+                self.target.do(ruch)
 
         if(inAction):
             #print(packAdres + ' ' + cel + ' ' +cAdres + ' ' + str(isPicked) + str(isPack)) 
