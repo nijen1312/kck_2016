@@ -87,9 +87,9 @@ class DriveCar(actions.Driver):
 ##              rozkaz2 = zadanie2[0]
             zadanie = pl[0]
             rozkaz = zadanie[0]
-            if(rozkaz == 'ODBIERZ' or rozkaz == 'ZAWIEĹą'):
+            if(rozkaz == 'ODBIERZ' or rozkaz == 'ZAWIEŹ'):
               adres = zadanie[2]
-            if(rozkaz == 'JEDĹą'):
+            if(rozkaz == 'JEDŹ'):
               adres = zadanie[1]
 ##            if(len(pl) == 2):
 ##              if(rozkaz2 == 'ODBIERZ' or rozkaz2 == 'ZAWIEĹą'):
@@ -100,7 +100,9 @@ class DriveCar(actions.Driver):
             startAction=True
             
         if(not isPack):
-          packAdres = random.choice(list(paczki))
+          packAdres = cAdres
+          while(packAdres == cAdres):
+            packAdres = random.choice(list(paczki))
           paczki[packAdres].opacity = 255
           cel = packAdres
           while(cel == packAdres or cel == cAdres):
@@ -111,7 +113,7 @@ class DriveCar(actions.Driver):
         
         if(startAction):
             startAction = False
-            if(rozkaz == 'ODBIERZ' or rozkaz == 'JEDĹą'):
+            if(rozkaz == 'ODBIERZ' or rozkaz == 'JEDŹ'):
                 ruch = MoveTo(self.target.position,0)
                 for i in shortest_path(G, cAdres, adres.lower()):
                   ruch += MoveTo(miejsca[i], 2)
@@ -121,7 +123,7 @@ class DriveCar(actions.Driver):
                 for i in shortest_path(G, cAdres, 'stacja'):
                   ruch += MoveTo(miejsca[i], 2)
                 self.target.do(ruch)
-            if(rozkaz == 'ZAWIEĹą'):
+            if(rozkaz == 'ZAWIEŹ'):
                 ruch = MoveTo(self.target.position,0)
                 for i in shortest_path(G, cAdres, adres.lower()):
                   ruch += MoveTo(miejsca[i], 2)
@@ -130,6 +132,7 @@ class DriveCar(actions.Driver):
                 print('Odpoczywam')               
 
         if(inAction):
+            #print(packAdres + ' ' + cel + ' ' +cAdres + ' ' + str(isPicked) + str(isPack)) 
             if(self.target.position == miejsca['mickiewicza']):
                 paczki['mickiewicza'].opacity = 0
                 inAction = False
@@ -138,6 +141,8 @@ class DriveCar(actions.Driver):
                   isPicked = True
                 if(cel == 'mickiewicza' and isPicked):
                   isPack = False
+                if(packAdres == 'mickiweicza'):
+                  isPicked = True
             if(self.target.position == miejsca['orlicza']):
                 paczki['orlicza'].opacity = 0
                 inAction = False
@@ -146,6 +151,8 @@ class DriveCar(actions.Driver):
                   isPicked = True
                 if(cel == 'orlicza' and isPicked):
                   isPack = False
+                if(packAdres == 'orlicza'):
+                  isPicked = True
             if(self.target.position == miejsca['pascala']):
                 paczki['pascala'].opacity = 0
                 inAction = False
@@ -154,6 +161,8 @@ class DriveCar(actions.Driver):
                   isPicked = True
                 if(cel == 'pascala' and isPicked):
                   isPack = False
+                if(packAdres == 'pascala'):
+                  isPicked = True
             if(self.target.position == miejsca['kopernika']):
                 paczki['kopernika'].opacity = 0
                 inAction = False
@@ -162,6 +171,8 @@ class DriveCar(actions.Driver):
                   isPicked = True
                 if(cel == 'kopernika' and isPicked):
                   isPack = False
+                if(packAdres == 'kopernika'):
+                  isPicked = True
             if(self.target.position == miejsca['borsuka']):
                 paczki['borsuka'].opacity = 0
                 inAction = False
@@ -170,11 +181,14 @@ class DriveCar(actions.Driver):
                   isPicked = True
                 if(cel == 'borsuka' and isPicked):
                   isPack = False
+                if(packAdres == 'borsuka'):
+                  isPicked = True
             if(self.target.position == miejsca['stacja']):
                 inAction = False
                 cAdres = 'stacja'
-                if(cel == 'borsuka' and isPicked):
-                  isPack = False
+            if(cAdres == cel):
+              isPicked = True
+  
             
             # handle input and move the car
 
