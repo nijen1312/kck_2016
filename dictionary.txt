@@ -7301,7 +7301,6 @@ przerwami	przerwa	subst:pl:inst:f	pospolita
 przerwach	przerwa	subst:pl:loc:f	pospolita
 przerw	przerwa	subst:pl:gen:f	pospolita
 przerwa	przerwa	subst:sg:nom:f	pospolita
-przerwę	przerwać	fin:sg:pri:perf	pospolita
 przerwij	przerwać	impt:sg:sec:perf	pospolita
 przerwawszy	przerwać	pant:perf	pospolita
 przerwą	przerwać	fin:pl:ter:perf	pospolita
@@ -37819,3 +37818,17 @@ najżywotniej	żywotnie	adv:sup	pospolita
 żyźnie	żyźnie	adv:pos	pospolita
 najżyźniej	żyźnie	adv:sup	pospolita
 żyźniej	żyźnie	adv:com	pospolita
+przesyłkom	przesyłka	subst:pl:dat:f	pospolita
+przesyłkach	przesyłka	subst:pl:loc:f	pospolita
+przesyłko	przesyłka	subst:sg:voc:f	pospolita
+przesyłka	przesyłka	subst:sg:nom:f	pospolita
+przesyłki	przesyłka	subst:sg:gen:f	pospolita
+przesyłkami	przesyłka	subst:pl:inst:f	pospolita
+przesyłki	przesyłka	subst:pl:voc:f	pospolita
+przesyłki	przesyłka	subst:pl:nom:f	pospolita
+przesyłki	przesyłka	subst:pl:acc:f	pospolita
+przesyłkę	przesyłka	subst:sg:acc:f	pospolita
+przesyłką	przesyłka	subst:sg:inst:f	pospolita
+przesyłek	przesyłka	subst:pl:gen:f	pospolita
+przesyłce	przesyłka	subst:sg:loc:f	pospolita
+przesyłce	przesyłka	subst:sg:dat:f	pospolita

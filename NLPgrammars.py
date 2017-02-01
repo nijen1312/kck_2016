@@ -15,7 +15,7 @@ readWords(words,'ACTION_WORDS','action_words.txt',delimiters)
 readWords(words,'RULES','rules.txt',delimiters+['|'])
 
 
-print(words)
+# print(words)
 while True:
     line = sys.stdin.readline().split()
     if "na:" in line and "końcu:" in line:
@@ -43,32 +43,22 @@ while True:
     prioritized=splitByPriority(list_polecen, words)
     pattern=matchOrderRules(prioritized, len(list_polecen)-1)
     shifted=UPDOWNRULE(list_polecen, prioritized,pattern)
-
     prioritized2 = []
     k = 0
     prioritized2.append([])
 
-    for list in shifted:
-        for elem in list:
+    for listElement in shifted:
+        for elem in listElement:
             if elem[:elem.index(':')] in delimiters2:
                 k += 1
                 prioritized2.append([])
             else:
                 prioritized2[k].append(elem)
 
-    print(prioritized2)
+    # print(prioritized2)
     orders = rules(prioritized2,words['RULES'])
+    with open("NLP.out", mode="w") as outFile:
+        outFile.write(str(orders)+'\n')
 
-#     #     if token.split(':')[1] == 'adv' or token.split(':')[1] == 'qub':
-#     #             list_polecen.append(temporary_list)
-#     #             temporary_list = []
-#     #             temporary_list.append(token)
-#     #             continue
-#     #     else:
-#     #         temporary_list.append(token)
-#     # if temporary_list[0].split(':')[0] in adv1:
-#     #     list_polecen.insert(0,temporary_list)
-#     # else:
-#     # list_polecen.append(temporary_list)
-    print(orders)
+    # print(orders)
     sys.stdout.flush()

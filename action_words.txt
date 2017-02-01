@@ -1,8 +1,8 @@
-ZATANKUJ:zatankować,nalać,wlać,napełnić,benzyna
-MAGAZYN:zjechać,magazyn,zrzucić,baza
+ZATANKUJ:zatankować,nalać,wlać,napełnić,benzyna,stacja,paliwo
+MAGAZYN:zjechać,magazyn,zrzucić,baza,centrala
 ODBIERZ:odebrać,zabrać,zgarnąć
-ZAWIEź:dostarczyć,podskoczyć,podrzucić,zawieźć
-PRZERWA:przerwa,odpocząć,przerwać
-JEDź:jechać,pojechać
-PACZKA:paczka
-ULICA:słowiańska
+ZAWIEŹ:dostarczyć,podrzucić,zawieźć,zostawić
+PRZERWA:przerwa,odpocząć
+JEDŹ:jechać,pojechać,podskoczyć
+PACZKA:paczka,przesyłka
+ULICA:kopernika,orlicza,pascala,mickiewicza,borsuka

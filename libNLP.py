@@ -1,5 +1,17 @@
+def chceckForPriority(pattern):
+    "chcecks if there is order adv in text"
+    orderTags = ["UP","DOWN"]
+    for tag in pattern:
+        if (tag == orderTags[0] or tag == orderTags[0]+"$" or tag == "^"+orderTags[0]):
+            return True
+        elif(tag == orderTags[1] or tag == orderTags[1]+"$" or tag == "^"+orderTags[1]):
+            return True
+    return False
 
 def UPDOWNRULE(lineList,priorList,pattern):
+    if len(pattern) == 0 or (not chceckForPriority(pattern)):
+        return [lineList]
+    elif pattern[0]!='^UP':
         out=[]
         prev=0
         for word in priorList:
@@ -15,14 +27,9 @@ def UPDOWNRULE(lineList,priorList,pattern):
             out.pop(2)
         out[0], out[1] = out[1], out[0]
         return out
+    else:
+        return [lineList[1:]]
 
-def chceckForPriority(line,orderWords):
-    "chcecks if there is order adv in text"
-    for word in orderWords:
-        if word in line:
-            return True
-        else:
-            return False
 def matchOrderRules(orderIndex,len):
     out = []
     prev = 0
@@ -100,18 +107,35 @@ def readWords(wordsHash,wordsType,filename,delimiters):
 #     return orders
 
 def rules(prioritized,rulesHash):
+    #prioritized [['pojechać:impt:JEDŹ', 'po:', 'paczka:subst:PACZKA', 'na:', 'orlicza::ULICA'][]...[]]
     orders = []
-    for list in prioritized:
+    for listElement in prioritized: #iteracja po rozkazach
+        nazwaUlicy = ""
         order = []
-        rules = []
-        rule_dict = {}
-        for elem in list:
-            elem = elem.split(':')
+        rules = [] #dodaje rozkazy wyłapane z pierwszego elementu listy
+        rule_dict = {} #nazwy ulic, paczek
+        #jeżeli ....
+        # print(listElement)
+
+        #wyjątek
+        if listElement[0]=="pojechać:impt:JEDŹ" or listElement[0]=="jechać:impt:JEDŹ":
+            if listElement[1]=="po:":
+                if listElement[2]=="paczka:subst:PACZKA" or listElement[2]=="przesyłka:subst:PACZKA":
+                    for i in range(3,len(listElement)):
+                        if "ULICA" in listElement[i]:
+                            nazwaUlicy = listElement[i].split(':')[0]
+                            break
+        if nazwaUlicy != "":
+            orders.append(['ODBIERZ','PACZKA',nazwaUlicy])
+            continue # wraca do pierszego fora
+
+        for elem in listElement: #iteracja elementach rozkazu
+            elem = elem.split(':') # np. [pojechać,impt,JEDŹ]
             try:
                 if elem[2] in rulesHash:
                     rules.append(rulesHash[elem[2]])
                     rule_dict[elem[2]] = elem[2]
-                elif elem[2] not in rule_dict:
+                elif elem[2] not in rule_dict:   #wyłapuje {'PACZKA': 'paczka', 'ODBIERZ': 'ODBIERZ', 'ULICA': 'orlicza'}
                     rule_dict[elem[2]] = elem[0]
             except:
                 continue
@@ -119,9 +143,9 @@ def rules(prioritized,rulesHash):
         # print(rule_dict)
         # print(rules)
 
+
         for rule in rules:
-            rule = rule[0].split(',')
-            print(rule)
+            rule = rule[0].split(',') #['ODBIERZ', 'PACZKA', 'ULICA']
             licznik = len(rule)
             order = []
             for elem in rule:
